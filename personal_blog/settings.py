@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 ]
 
 TAILWIND_APP_NAME = 'Theme'
-Internal_IPs = ['127.0.0.1']
+Internal_IPS = ['127.0.0.1']
 
 NPM_BIN_PATH = '/usr/local/bin/npm'
 
@@ -128,3 +128,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'personal_blog' / 'static']
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Default primary key field type
+# https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
