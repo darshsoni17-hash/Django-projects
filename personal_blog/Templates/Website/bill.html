@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Bill
+{% endblock %}
+
+{% block content %}
+
+<div style="padding:60px 16px; background:#f9fafb; min-height:100vh; display:flex; align-items:center; justify-content:center;">
+
+    <div style="max-width:420px; width:100%; background:white; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,0.1); padding:32px;">
+
+        <div style="text-align:center; margin-bottom:24px;">
+            <p style="font-size:2rem; margin-bottom:8px;">🧾</p>
+            <h1 style="font-size:1.5rem; font-weight:800; color:#111;">Bill Receipt</h1>
+        </div>
+
+        <div style="border-bottom:1px dashed #ccc; padding-bottom:16px; margin-bottom:16px;">
+            <p style="font-weight:700; color:#111; margin:0 0 4px;">{{ store.name }}</p>
+            <p style="font-size:0.85rem; color:#777; margin:0;">📍 {{ store.location }}</p>
+        </div>
+
+        <div style="margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                <span style="color:#555;">Amount</span>
+                <span style="font-weight:600;">₹{{ store.price }}</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                <span style="color:#555;">GST (18%)</span>
+                <span style="font-weight:600;">₹{{ store.gst_amount }}</span>
+            </div>
+            <hr style="margin:12px 0; border:none; border-top:1px solid #eee;">
+            <div style="display:flex; justify-content:space-between; font-size:1.1rem;">
+                <span style="font-weight:800;">Total</span>
+                <span style="font-weight:800; color:#15803d;">₹{{ store.total_with_gst }}</span>
+            </div>
+        </div>
+
+        <a href="{% url 'home' %}"
+           style="display:block; text-align:center; background:#111; color:white; padding:10px; border-radius:8px; text-decoration:none; font-weight:600;">
+            ← Back to Home
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}

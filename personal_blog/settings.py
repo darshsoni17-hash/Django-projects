@@ -48,7 +48,10 @@ Internal_IPS = ['127.0.0.1']
 
 NPM_BIN_PATH = '/usr/local/bin/npm'
 
+"BrowserReloadMiddleware",
+
 MIDDLEWARE = [
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,10 +59,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    "django_browser_reload.middleware."
-    "BrowserReloadMiddleware",
-]
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
+]    
 
 ROOT_URLCONF = 'personal_blog.urls'
 
@@ -130,7 +131,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'personal_blog' / 'static']
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = (BASE_DIR / 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/6.0/ref/settings/#default-auto-field
 

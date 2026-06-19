@@ -1,28 +1,58 @@
 {% extends "layout.html" %}
 
 {% block title %}
-chai Page
+Chai Page
 {% endblock %}
 
 {% block content %}
-<h1>All chai for you</h1>
 
-<div class="grid grid-cols-3 gap-4 m-4">
+<div style="padding:40px 16px; background:#f9fafb; min-height:100vh;">
 
-{% for chai in chais %}
-<div class="bg-blue-500 p-5 rounded">
-  <img class="rounded src={{chai.image.url}}" alt="">
-  <h3 class="text-2xl font-bold{{chai.name}}</h3>
-  <a href="#">
-  <button
-   type="button"
-   class="inline-flex items center block justify center px-4 py-2 border border-trensparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outliine-none focus:ring-2 focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-   >
-    {{chai.type}} - {{chai.id}}
-  </button>
+    <div style="text-align:center; margin-bottom:24px;">
+        <h1 style="font-size:2.5rem; font-weight:800; color:#111;">Discover the world of chai</h1>
+        <p style="color:#666; margin-top:8px;">Explore different flavors, recipes, and varieties of tea from around the world.</p>
+
+        <a href="{% url 'view_cart' %}"
+           style="display:inline-block; margin-top:16px; background:#111; color:white; padding:8px 18px; border-radius:8px; text-decoration:none; font-weight:600; font-size:0.9rem;">
+            🛒 View Cart
+        </a>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1100px; margin:0 auto;">
+
+        {% for chai in chais %}
+        <div style="background:white; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,0.1); overflow:hidden; transition:transform 0.2s; cursor:pointer;"
+             onmouseover="this.style.transform='scale(1.05)'"
+             onmouseout="this.style.transform='scale(1)'">
+
+            {% if chai.image %}
+            <img src="{{ chai.image.url }}" alt="{{ chai.name }}"
+                 style="width:100%; height:200px; object-fit:cover;">
+            {% else %}
+            <div style="width:100%; height:200px; background:#e5e7eb; display:flex; align-items:center; justify-content:center; color:#aaa;">
+                No image
+            </div>
+            {% endif %}
+
+            <div style="padding:16px;">
+                <h3 style="font-size:1.2rem; font-weight:700; color:#111; margin-bottom:8px;">{{ chai.name }}</h3>
+                <p style="font-size:1.1rem; font-weight:700; color:#15803d; margin-bottom:10px;">₹{{ chai.price }}</p>
+
+                <a href="{% url 'chai_detail' chai.id %}"
+                   style="display:inline-block; background:#ea580c; color:white; font-size:0.8rem; font-weight:600; padding:6px 14px; border-radius:8px; text-decoration:none; margin-right:6px;">
+                    {{ chai.type }} - {{ chai.id }}
+                </a>
+
+                <a href="{% url 'add_to_cart' chai.id %}"
+                   style="display:inline-block; background:#111; color:white; font-size:0.8rem; font-weight:600; padding:6px 14px; border-radius:8px; text-decoration:none;">
+                    + Add to Cart
+                </a>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
 </div>
-
-{% endfor %}    
-</div> 
 
 {% endblock %}

@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Chai Detail
+{% endblock %}
+
+{% block content %}
+
+<div style="padding:40px 16px; background:#f9fafb; min-height:100vh;">
+
+    <div style="max-width:600px; margin:0 auto; background:white; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,0.1); overflow:hidden; margin-bottom:20px;">
+
+        <div style="padding:24px;">
+            <h1 style="font-size:2rem; font-weight:800; color:#111; margin-bottom:12px;">{{ chai.name }}</h1>
+            <p style="color:#555; line-height:1.7;">{{ chai.description }}</p>
+
+            <a href="{% url 'all_chai' %}"
+               style="display:inline-block; margin-top:20px; background:#111; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:600;">
+                ← Back to all chai
+            </a>
+        </div>
+    </div>
+
+    <!-- REVIEWS SECTION -->
+    <div style="max-width:600px; margin:0 auto;">
+
+        <h2 style="font-size:1.3rem; font-weight:800; color:#111; margin-bottom:16px;">⭐ Reviews</h2>
+
+        {% if reviews %}
+            {% for review in reviews %}
+            <div style="background:white; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08); padding:16px; margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <p style="font-weight:700; color:#111; margin:0;">{{ review.user.username }}</p>
+                    <span style="color:#f59e0b; font-weight:700;">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
+                        {% endfor %}
+                    </span>
+                </div>
+                <p style="color:#555; font-size:0.9rem; margin:0;">{{ review.comment }}</p>
+                <p style="color:#aaa; font-size:0.75rem; margin-top:6px;">{{ review.date_added|date:"d M Y" }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div style="background:white; border-radius:12px; padding:20px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.08); margin-bottom:16px;">
+                <p style="color:#777; font-size:0.9rem;">No reviews yet. Be the first to review!</p>
+            </div>
+        {% endif %}
+
+        <!-- ADD REVIEW FORM -->
+        {% if user.is_authenticated %}
+        <div style="background:white; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08); padding:20px; margin-top:20px;">
+            <h3 style="font-weight:700; color:#111; margin-bottom:12px;">Write a Review</h3>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <label style="display:block; font-size:0.9rem; font-weight:600; color:#333; margin-bottom:6px;">Rating</label>
+                <select name="rating" required
+                        style="width:100%; border:1px solid #ccc; border-radius:8px; padding:8px; font-size:0.9rem; margin-bottom:12px;">
+                    <option value="5">★★★★★ (5)</option>
+                    <option value="4">★★★★☆ (4)</option>
+                    <option value="3">★★★☆☆ (3)</option>
+                    <option value="2">★★☆☆☆ (2)</option>
+                    <option value="1">★☆☆☆☆ (1)</option>
+                </select>
+
+                <label style="display:block; font-size:0.9rem; font-weight:600; color:#333; margin-bottom:6px;">Comment</label>
+                <textarea name="comment" required rows="3"
+                          style="width:100%; border:1px solid #ccc; border-radius:8px; padding:8px; font-size:0.9rem; margin-bottom:12px; resize:vertical;"
+                          placeholder="Share your thoughts about this chai..."></textarea>
+
+                <button type="submit"
+                        style="background:#111; color:white; font-weight:600; padding:10px 20px; border:none; border-radius:8px; cursor:pointer; font-size:0.9rem;">
+                    Submit Review
+                </button>
+            </form>
+        </div>
+        {% else %}
+        <div style="background:#fff7ed; border-radius:12px; padding:16px; text-align:center; margin-top:20px;">
+            <p style="color:#9a3412; font-size:0.85rem;">
+                Please <a href="/admin/login/" style="font-weight:700; text-decoration:underline;">log in</a> to write a review.
+            </p>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
